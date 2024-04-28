@@ -2,7 +2,7 @@ require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
   test "Requires a name" do 
-    @user = User.new(name: "", email: "test@example.com")
+    @user = User.new(name: "", email: "test@example.com", password: "password")
     assert_not @user.valid?
 
     @user.name = "The name"
@@ -10,7 +10,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "Requires a valid email" do 
-    @user = User.new(name: "The name", email: "")
+    @user = User.new(name: "The name", email: "", password: "password")
     assert_not @user.valid?
 
     @user.email = "invalid"
@@ -21,11 +21,11 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "requires a unique email" do 
-    @existing_user = User.create(name: "The name", email: "test@example.com")
+    @existing_user = User.create(name: "The name", email: "test@example.com", password: "password")
 
     assert @existing_user.persisted?
 
-    @user = User.new(name: "Another name", email: "test@example.com")
+    @user = User.new(name: "Another name", email: "test@example.com", password: "password")
 
     assert_not @user.valid?
   end
@@ -39,5 +39,18 @@ class UserTest < ActiveSupport::TestCase
   test "email is downcased" do 
     @user = User.create(name: "The name ", email: "TEST@eMaIl.Com")
     assert_equal "test@email.com", @user.email
+  end
+
+  test "password length must be between 8 and ActiveRecord's maximum" do 
+    @user = User.new(name: "The name", email: "test@email.com", password: "")
+
+    assert_not @user.valid?
+
+    @user.password = "password"
+    assert @user.valid?
+
+    max_length = ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED
+    @user.password = 'a' * ( max_length + 1 )
+    assert_not @user.valid?
   end
 end
