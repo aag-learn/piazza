@@ -23,5 +23,9 @@ module Piazza
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.action_view.field_error_proc = proc do |html_tag, instance|
+      render 'application/form_errors', html_tag:, instance:
+    end
   end
 end
