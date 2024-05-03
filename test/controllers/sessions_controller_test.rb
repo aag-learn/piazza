@@ -11,6 +11,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
     end
 
+    assert_not_empty cookies[:app_session]
     assert_redirected_to root_path
   end
   
