@@ -7,3 +7,15 @@ one:
 two:
   user: two
   organization: two
+
+jerry:
+  user: jerry
+  organization: jerry
+
+kramer:
+  user: kramer
+  organization: kramer
+
+elaine:
+  user: elaine
+  organization: elaine
