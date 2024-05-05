@@ -2,13 +2,13 @@ module Authenticate
   extend ActiveSupport::Concern
 
   included do
-    before_action :authenticate 
+    before_action :authenticate
     before_action :require_login, unless: :logged_in?
 
     helper_method :logged_in?
   end
 
-  class_methods do 
+  class_methods do
     def skip_authentication(**options)
       skip_before_action :authenticate, options
       skip_before_action :require_login, options
@@ -22,9 +22,13 @@ module Authenticate
   protected
 
   def log_in(app_session)
-    cookies.encrypted.permanent[:app_session] = { 
+    cookies.encrypted.permanent[:app_session] = {
       value: app_session.to_h
     }
+  end
+
+  def log_out
+    Current.app_session&.destroy
   end
 
   def logged_in?
@@ -34,11 +38,11 @@ module Authenticate
   private
 
   def require_login
-    flash.now[:notice] = t("login_required")
-    render "sessions/new", status: :unauthorized
+    flash.now[:notice] = t('login_required')
+    render 'sessions/new', status: :unauthorized
   end
 
-  def authenticate 
+  def authenticate
     Current.app_session = authenticate_using_cookie
     Current.user = Current.app_session&.user
   end
