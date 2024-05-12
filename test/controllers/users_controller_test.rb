@@ -1,11 +1,11 @@
-require "test_helper"
+require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
   test 'redirects to feed after successful sign up' do
     get sign_up_path
     assert_response :ok
 
-    assert_difference ['User.count', 'Organization.count'], 1 do 
+    assert_difference ['User.count', 'Organization.count'], 1 do
       post sign_up_path, params: {
         user: {
           name: 'The name',
@@ -27,7 +27,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get sign_up_path
     assert_response :ok
 
-    assert_no_difference ['User.count', 'Organization.count'] do 
+    assert_no_difference ['User.count', 'Organization.count'] do
       post sign_up_path, params: {
         user: {
           name: 'The name',
@@ -47,7 +47,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get sign_up_path
     assert_response :ok
 
-    assert_no_difference ['User.count', 'Organization.count'] do 
+    assert_no_difference ['User.count', 'Organization.count'] do
       post sign_up_path, params: {
         user: {
           name: 'The name',
@@ -60,6 +60,30 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unprocessable_entity
 
-    assert_select 'p.is-danger', text: I18n.t('activerecord.errors.models.user.attributes.password_confirmation.confirmation')
+    assert_select 'p.is-danger',
+                  text: I18n.t('activerecord.errors.models.user.attributes.password_confirmation.confirmation')
+  end
+
+  test 'can update user profile' do
+    @user = users(:jerry)
+    log_in @user
+
+    patch profile_path params: {
+      user: {
+        name: 'Jerry the ant'
+      }
+    }
+
+    assert_redirected_to profile_path
+    assert_equal 'Jerry the ant', @user.reload.name
+  end
+
+  test 'can show the profile' do
+    @user = users(:jerry)
+    log_in @user
+
+    get profile_path
+    assert_select 'input#user_name', value: @user.name
+    assert_select 'input#user_email', value: @user.email
   end
 end

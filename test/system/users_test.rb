@@ -40,4 +40,16 @@ class UsersTest < ApplicationSystemTestCase
     assert_selector '.notification', text: I18n.t('sessions.create.success')
     assert_selector '.navbar-dropdown', visible: false
   end
+
+  test 'can update name' do
+    user = users(:jerry)
+    log_in(user)
+
+    visit profile_path
+
+    fill_in User.human_attribute_name(:name), with: 'The new Jerry'
+    click_button I18n.t('users.show.save_profile')
+    assert_selector 'form .notification', text: I18n.t('users.update.success')
+    assert_selector '#current_user_name', text: user.name
+  end
 end

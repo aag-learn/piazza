@@ -1,13 +1,13 @@
 class User
-  module Authentication 
+  module Authentication
     extend ActiveSupport::Concern
 
     included do
       has_secure_password
-      validates :password, presence: true, length: { minimum: 8 }
+      validates :password, presence: true, length: { minimum: 8 }, on: %i[create password_change]
 
       has_many :app_sessions
-      def self.create_app_session email:, password: 
+      def self.create_app_session(email:, password:)
         user = User.authenticate_by(email:, password:)
         user.app_sessions.create if user.present?
       end
@@ -18,6 +18,5 @@ class User
         nil
       end
     end
-
   end
 end

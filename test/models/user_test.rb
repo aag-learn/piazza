@@ -40,4 +40,20 @@ class UserTest < ActiveSupport::TestCase
     @user = User.create(name: 'The name ', email: 'TEST@eMaIl.Com')
     assert_equal 'test@email.com', @user.email
   end
+
+  test 'can update the name only' do
+    user = users(:jerry)
+    user.name = 'The new name'
+
+    assert user.valid?
+    user.save
+    assert_equal 'The new name', user.reload.name
+  end
+
+  test 'password_change context validates the password' do
+    user = users(:jerry)
+    user.password = 'wrong'
+    user.password = 'wrong'
+    assert_not user.valid?(:password_change)
+  end
 end
