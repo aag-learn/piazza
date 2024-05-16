@@ -56,4 +56,21 @@ class UserTest < ActiveSupport::TestCase
     user.password = 'wrong'
     assert_not user.valid?(:password_change)
   end
+
+  test 'can update the user and the password using the context_change context' do
+    user = users(:jerry)
+    user.password = 'newpassword'
+    user.password_confirmation = 'newpassword'
+    user.name = 'The new name'
+    assert user.valid?(:password_change)
+    user.save context: :password_change
+    assert_equal 'The new name', user.reload.name
+    assert user.authenticate('newpassword')
+  end
+
+  test 'can update user without updating the password' do
+    user = users(:jerry)
+    user.name = 'The new name'
+    assert user.valid?
+  end
 end
