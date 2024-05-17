@@ -52,4 +52,17 @@ class UsersTest < ApplicationSystemTestCase
     assert_selector 'form .notification', text: I18n.t('users.update.success')
     assert_selector '#current_user_name', text: user.name
   end
+
+  test 'can log out in the desktop' do
+    user = users(:jerry)
+    log_in(user)
+
+    visit root_path
+
+    find('.navbar-item.is-hoverable').hover
+    click_on I18n.t('application.navbar.logout')
+
+    assert_current_path root_path
+    assert_selector '.notification', text: I18n.t('sessions.destroy.success')
+  end
 end
