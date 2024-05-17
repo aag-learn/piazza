@@ -16,6 +16,14 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     click_button I18n.t('sessions.new.submit')
     assert_current_path root_path
   end
+
+  def log_out
+    find('.navbar-item.is-hoverable').hover
+    click_on I18n.t('application.navbar.logout')
+
+    assert_current_path root_path
+    assert_selector '.notification', text: I18n.t('sessions.destroy.success')
+  end
 end
 
 class MobileSystemTestCase < ApplicationSystemTestCase
@@ -26,5 +34,12 @@ class MobileSystemTestCase < ApplicationSystemTestCase
 
   teardown do
     current_window.resize_to(*DESKTOP_SIZE)
+  end
+
+  def log_out
+    find('.navbar-burger').click
+    click_link I18n.t('application.navbar.logout')
+    assert_current_path root_path
+    assert_selector '.notification', text: I18n.t('sessions.destroy.success')
   end
 end
