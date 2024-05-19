@@ -1,10 +1,11 @@
 require 'test_helper'
 
-class AuthenticateTestsController < TestController 
-  include Authenticate 
+class AuthenticateTestsController < TestController
+  include Authenticate
 
-  skip_authentication only: [:new, :create]
+  skip_authentication only: %i[new create]
   allow_unauthenticated only: :show
+  #  helper_method :turbo_native_app?
 
   def show
     render plain: "User: #{Current.user&.id&.to_s}"
@@ -14,12 +15,12 @@ end
 class AuthenticateTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:jerry)
-    draw_test_routes do 
-      resource :authenticate_test, only: [:new, :create, :show, :edit]
+    draw_test_routes do
+      resource :authenticate_test, only: %i[new create show edit]
     end
   end
 
-  teardown do 
+  teardown do
     reload_routes!
   end
 
@@ -30,10 +31,10 @@ class AuthenticateTest < ActionDispatch::IntegrationTest
     get edit_authenticate_test_path
 
     assert_response :ok
-    assert_match /authenticate_tests#edit/, response.body
+    assert_match(/authenticate_tests#edit/, response.body)
   end
 
-  test 'unauthenticated request renders login page' do 
+  test 'unauthenticated request renders login page' do
     get edit_authenticate_test_path
 
     assert_response :unauthorized
@@ -45,17 +46,17 @@ class AuthenticateTest < ActionDispatch::IntegrationTest
     get new_authenticate_test_path
 
     assert_response :ok
-    assert_match /authenticate_tests#new/, response.body
+    assert_match(/authenticate_tests#new/, response.body)
 
     post authenticate_test_path
     assert_response :ok
-    assert_match /authenticate_tests#create/, response.body
+    assert_match(/authenticate_tests#create/, response.body)
   end
 
   test 'unauthenticated requests are allowed when marked' do
-    get authenticate_test_path 
-    assert_response :ok 
-    assert_equal "User: ", response.body
+    get authenticate_test_path
+    assert_response :ok
+    assert_equal 'User: ', response.body
 
     @user.app_sessions.destroy_all
     log_in(@user)

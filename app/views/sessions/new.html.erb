@@ -18,6 +18,13 @@
       </div>
       <%= form.submit t('.submit'), class: 'button is-primary is-large is-aligned-self-flex-end mb-3 mt-3' %>
     <% end %>
+
+    <% if turbo_native_app? %>
+      <% tag.p class: 'has-text-centered' do %>
+          <%= t('.sign_up_message') %>
+          <%= link_to t('.sign_up'), sign_up_path %>
+      <% end %>
+    <% end %>
   </layout-column>
 </layout-columns>
 
