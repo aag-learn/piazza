@@ -11,7 +11,8 @@ class UsersController < ApplicationController
       @organization = Organization.create(members: [@user])
       app_session = @user.app_sessions.create
       log_in(app_session)
-      redirect_to root_path, status: :see_other, flash: { success: t('.welcome', name: @user.name) }
+      flash[:success] = t('.welcome', name: @user.name)
+      recede_or_redirect_to root_path, status: :see_other, flash: { success: t('.welcome', name: @user.name) }
     else
       render :new, status: :unprocessable_entity
     end
