@@ -77,7 +77,7 @@ Rails.application.configure do
     protocol: 'https'
   }
   config.action_mailer.smtp_settings = {
-    address: 'smtp.alfonsoalba.com',
+    address: 'smtp.dondominio.com',
     port: 587,
     user_name: 'alfonso@alfonsoalba.com',
     password: Rails.application.credentials.mail_password,
