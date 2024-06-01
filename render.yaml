@@ -13,7 +13,16 @@ services:
           property: connectionString
       - key: RAILS_MASTER_KEY
         sync: false
+      - fromGroup: domains
 databases:
   - name: piazza-db
     plan: free
-    postgresMajorVersion: 14
+    postgresMajorVersion: "14"
+
+envVarGroups:
+  - name: domains
+    envVars:
+      - key: DOMAIN_NAME
+        value: alfonsoalba.com
+      - key: OUTBOUND_EMAIL_DOMAIN
+        value: alfonsoalba.com

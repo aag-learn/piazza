@@ -24,6 +24,15 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     assert_current_path root_path
     assert_selector '.notification', text: I18n.t('sessions.destroy.success')
   end
+
+  def extract_primary_link_from_email
+    email = ActionMailer::Base.deliveries.last
+    html_body = Nokogiri::HTML(email.html_part.body.decoded)
+
+    primary_link = html_body.css('a.button').attr('href').value
+    primary_link = URI(primary_link)
+    "#{primary_link.path}?#{primary_link.query}"
+  end
 end
 
 class MobileSystemTestCase < ApplicationSystemTestCase

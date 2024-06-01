@@ -1,6 +1,12 @@
 require 'test_helper'
 
 class UserMailerTest < ActionMailer::TestCase
+  include Rails.application.routes.url_helpers
+
+  def default_url_options
+    Rails.application.config.action_mailer.default_url_options
+  end
+
   setup do
     @user = users(:jerry)
     ActionMailer::Base.deliveries.clear
@@ -16,7 +22,8 @@ class UserMailerTest < ActionMailer::TestCase
     assert_match @user.email, email[:to].unparsed_value
 
     assert_select_email do
-      assert_select 'a.button'
+      url = edit_users_password_reset_url('reset_token')
+      assert_select 'a.button[href="' + url + '"]'
     end
   end
 end

@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   namespace :users do
     patch 'change_password', to: 'passwords#update'
-    resources 'password_resets', only: %i[new create]
+    resources 'password_resets', only: %i[new create edit update]
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
