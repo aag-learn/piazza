@@ -54,6 +54,7 @@ group :development, :test do
   # gem "debug", platforms: %i[ mri windows ]
   gem 'byebug'
 
+  gem 'faker'
   gem 'pry'
   gem 'pry-byebug'
   gem 'pry-rails'

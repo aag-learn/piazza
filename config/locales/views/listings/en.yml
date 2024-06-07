@@ -1,0 +1,21 @@
+en:
+  listings:
+    create:
+      success: Your ad has been published!
+    new:
+      title: Create an ad
+      publish: Publish ad
+    destroy:
+      success: Your ad has been deleted!
+    edit:
+      title: Edit ad
+      publish: Update ad
+      delete: Delete
+      confirm_delete: Are you sure you want to delete this ad?
+    update:
+      success: Your ad has been updated!
+    show:
+      posted_by: Posted by 
+      edit: Edit
+      save: Save
+      contact: Send message
