@@ -29,6 +29,9 @@
         <dl>
           <dt class="has-text-grey"><%= @listing.class.human_attribute_name(:price)%></dt>
           <dd class="has-text-weight-semibold is-size-5"><%= @listing.price %>€</dd>
+          <br>
+          <dt class="has-text-grey"><%= @listing.class.human_attribute_name(:condition)%></dt>
+          <dd class="has-text-weight-semibold is-size-5"><%= @listing.human_enum_value :condition %></dd>
         </dl>
       </layout-column>
     </layout-columns>

@@ -8,7 +8,7 @@ class ListingControllerTest < ActionDispatch::IntegrationTest
 
   test 'can create a listing' do
     assert_difference 'Listing.count', 1 do
-      post listings_path, params: { listing: { title: 'The listing title', price: 1 } }
+      post listings_path, params: { listing: { title: 'The listing title', price: 1, condition: :near_mint } }
     end
   end
 

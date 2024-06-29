@@ -6,6 +6,7 @@ auto_listing_<%= n %>_<%= user %>:
   organization: <%= user %>
   title: <%= Faker::Commerce.product_name %>
   price: <%= Faker::Commerce.price.floor %>
+  condition: <%= %i[mint near_mint used defective].sample %>
 <% end %>
 <% end %>
 
@@ -14,9 +15,11 @@ one:
   price: 1
   organization: one
   creator: one
+  condition: :near_mint
 
 two:
   title: MyString
   price: 1
   organization: two
   creator: two
+  condition: :mint
