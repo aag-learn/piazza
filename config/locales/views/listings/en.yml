@@ -19,3 +19,8 @@ en:
       edit: Edit
       save: Save
       contact: Send message
+    tags_field:
+      description: >
+        You can add up to 5 tags to your add.
+        These tags act like categories.
+      add_tag: Add tag

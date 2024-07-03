@@ -31,4 +31,10 @@ class ListingTest < ActiveSupport::TestCase
     @listing.condition = nil
     assert_not @listing.valid?
   end
+
+  test 'downcase tags before saving' do
+    @listing.tags = %w[Ruby Rails PostgreSQL]
+    @listing.save
+    assert_equal %w[ruby rails postgresql], @listing.tags
+  end
 end
