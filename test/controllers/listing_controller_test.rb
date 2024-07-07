@@ -8,7 +8,8 @@ class ListingControllerTest < ActionDispatch::IntegrationTest
 
   test 'can create a listing' do
     assert_difference 'Listing.count', 1 do
-      post listings_path, params: { listing: { title: 'The listing title', price: 1, condition: :near_mint } }
+      post listings_path,
+           params: { listing: { title: 'The listing title', price: 1, condition: :near_mint, tags: %w[tagOne tagTwo] } }
     end
   end
 
@@ -36,18 +37,22 @@ class ListingControllerTest < ActionDispatch::IntegrationTest
   test 'error when updating an invalid listing with invalid parameters' do
     new_title = ''
     new_price = 0.5
-    params = { listing: { title: '', price: new_price } }
+    new_tags = []
+    params = { listing: { title: new_title, price: new_price, tags: new_tags } }
     listing = listings(:auto_listing_1_jerry)
     old_title = listing.title
     old_price = listing.price
+    old_tags = listing.tags
 
     patch(listing_path(listing), params:)
     assert_response :unprocessable_entity
     assert_select '.is-danger', text: /is too short/
     assert_select '.is-danger', text: /integer/
+    assert_select '.is-danger', text: /You need to specify at least one tag/
     listing.reload
     assert_equal old_title, listing.title
     assert_equal old_price, listing.price
+    assert_equal old_tags, listing.tags
   end
 
   test 'can delete a listing' do

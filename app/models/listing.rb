@@ -6,7 +6,8 @@ class Listing < ApplicationRecord
   belongs_to :organization
   belongs_to :creator, class_name: 'User', foreign_key: 'creator_id'
 
-  before_save :downcase_tags
+  before_save :downcase_tags, :remove_empty_tags
+  before_validation :remove_empty_tags
 
   enum condition: {
     mint: 'mint',
@@ -23,5 +24,9 @@ class Listing < ApplicationRecord
 
   def downcase_tags
     tags.map!(&:downcase)
+  end
+
+  def remove_empty_tags
+    self.tags = tags.reject(&:empty?)
   end
 end

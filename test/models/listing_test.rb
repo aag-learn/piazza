@@ -4,7 +4,7 @@ class ListingTest < ActiveSupport::TestCase
   setup do
     @creator = users(:jerry)
     @organization = organizations(:one)
-    @listing = Listing.new(title: 'A valid title', condition: :mint, price: 1000, creator: @creator,
+    @listing = Listing.new(title: 'A valid title', condition: :mint, price: 1000, creator: @creator, tags: ['oneTag'],
                            organization: @organization)
     assert @listing.valid?
   end
@@ -36,5 +36,17 @@ class ListingTest < ActiveSupport::TestCase
     @listing.tags = %w[Ruby Rails PostgreSQL]
     @listing.save
     assert_equal %w[ruby rails postgresql], @listing.tags
+  end
+
+  test 'Empty string tags are ignored' do
+    @listing.tags = ['Ruby', 'Rails', 'PostgreSQL', '']
+    assert @listing.save
+    assert_equal %w[ruby rails postgresql], @listing.tags
+  end
+
+  test 'A tag with an empty string is not valid' do
+    @listing.tags = ['']
+    assert @listing.invalid?
+    assert_equal ['You need to specify at least one tag'], @listing.errors[:tags]
   end
 end
