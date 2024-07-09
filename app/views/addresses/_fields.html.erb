@@ -1,0 +1,31 @@
+<%# locals: (form:) -%>
+
+<%= form.fields_for :address, form.object.address do |fields| %> 
+  <form-field class="field">
+    <%= fields.label :line_1, class: "label" %>
+    <%= fields.text_field :line_1, class: "input" %>
+  </form-field>
+
+  <form-field class="field">
+    <%= fields.label :line_2, class: "label" %>
+    <%= fields.text_field :line_2, class: "input" %>
+  </form-field>
+
+  <form-field class="field is-horizontal">
+    <div class="control mr-2">
+      <%= fields.label :city, class: "label" %> 
+      <%= fields.text_field :city, class: "input" %>
+    </div>
+    <div class="control ml-2">
+      <%= fields.label :postcode, class: "label" %> 
+      <%= fields.text_field :postcode, class: "input" %>
+    </div>
+  </form-field>
+
+  <form-field class="field">
+    <%= fields.label :cuontry, class: "label" %>
+    <div class="select is-fullwidth">
+      <%= fields.country_select :country, selected: 'ES' %>
+    </div>
+  </form-field>
+<% end %>

@@ -29,6 +29,13 @@
       <form-field class="field">
         <%= render 'tags_field', form: %>
       </form-field>
+
+      <form-field class="field">
+        <%= form.label :address, class: "label" %> 
+        <div class="box">
+          <%= render 'addresses/fields', form: %>
+        </div>
+      </form-field>
     </div>
   </layout-column>
   <layout-column class="box column is-half mt-6 p-5 m-4">

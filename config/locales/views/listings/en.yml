@@ -19,6 +19,7 @@ en:
       edit: Edit
       save: Save
       contact: Send message
+      location: Location
     tags_field:
       description: >
         You can add up to 5 tags to your add.

@@ -33,6 +33,9 @@
           <br>
           <dt class="has-text-grey"><%= @listing.class.human_attribute_name(:condition)%></dt>
           <dd class="has-text-weight-semibold is-size-5"><%= @listing.human_enum_value :condition %></dd>
+          <br>
+          <dt class="has-text-grey"><%= t('.location') %></dt>
+          <dd class="has-text-weight-semibold is-size-5"><%= @listing.address&.redacted %></dd>
         </dl>
       </layout-column>
     </layout-columns>
