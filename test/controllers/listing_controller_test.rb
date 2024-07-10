@@ -8,8 +8,16 @@ class ListingControllerTest < ActionDispatch::IntegrationTest
 
   test 'can create a listing' do
     assert_difference 'Listing.count', 1 do
+      address_attributes = {
+        line_1: Faker::Address.street_address,
+        line_2: Faker::Address.secondary_address,
+        postcode: Faker::Address.zip,
+        city: Faker::Address.city,
+        country: Faker::Address.country_code
+      }
       post listings_path,
-           params: { listing: { title: 'The listing title', price: 1, condition: :near_mint, tags: %w[tagOne tagTwo] } }
+           params: { listing: { title: 'The listing title', price: 1, condition: :near_mint, tags: %w[tagOne tagTwo],
+                                address_attributes: } }
     end
   end
 
@@ -24,7 +32,14 @@ class ListingControllerTest < ActionDispatch::IntegrationTest
   test 'can update a listing' do
     new_title = Faker::Commerce.product_name
     new_price = Faker::Commerce.price.floor
-    params = { listing: { title: new_title, price: new_price } }
+    address_attributes = {
+      line_1: Faker::Address.street_address,
+      line_2: Faker::Address.secondary_address,
+      postcode: Faker::Address.zip,
+      city: Faker::Address.city,
+      country: Faker::Address.country_code
+    }
+    params = { listing: { title: new_title, price: new_price, address_attributes: } }
     listing = listings(:auto_listing_1_jerry)
 
     patch(listing_path(listing), params:)
@@ -32,6 +47,11 @@ class ListingControllerTest < ActionDispatch::IntegrationTest
     listing.reload
     assert_equal new_title, listing.title
     assert_equal new_price, listing.price
+    assert_equal address_attributes[:line_1], listing.address.line_1
+    assert_equal address_attributes[:line_2], listing.address.line_2
+    assert_equal address_attributes[:postcode], listing.address.postcode
+    assert_equal address_attributes[:city], listing.address.city
+    assert_equal address_attributes[:country], listing.address.country
   end
 
   test 'error when updating an invalid listing with invalid parameters' do

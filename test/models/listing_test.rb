@@ -4,8 +4,15 @@ class ListingTest < ActiveSupport::TestCase
   setup do
     @creator = users(:jerry)
     @organization = organizations(:one)
+    address_attributes = {
+      line_1: Faker::Address.street_address,
+      line_2: Faker::Address.secondary_address,
+      postcode: Faker::Address.zip,
+      city: Faker::Address.city,
+      country: Faker::Address.country_code
+    }
     @listing = Listing.new(title: 'A valid title', condition: :mint, price: 1000, creator: @creator, tags: ['oneTag'],
-                           organization: @organization)
+                           organization: @organization, address_attributes:)
     assert @listing.valid?
   end
 
