@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
   has_many :memberships, dependent: :destroy
   has_many :organizations, through: :memberships
+  has_many :listings, inverse_of: :creator
 
   normalizes :name, with: ->(name) { name.strip }
   normalizes :email, with: ->(email) { email.strip.downcase }
