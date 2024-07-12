@@ -80,7 +80,7 @@ class ListingControllerTest < ActionDispatch::IntegrationTest
     assert_difference 'Listing.count', -1 do
       delete listing_path(listing)
     end
-    assert_redirected_to listings_path
+    assert_redirected_to my_listings_path
     follow_redirect!
     assert_select '.notification', text: /#{I18n.t('listings.destroy.success')}/
   end

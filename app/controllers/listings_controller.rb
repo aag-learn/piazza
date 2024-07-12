@@ -1,10 +1,6 @@
 class ListingsController < ApplicationController
   allow_unauthenticated only: %i[show]
   before_action :load_listing, except: %i[new create index]
-  def index
-    ### TO BE DELETED!!!!! The book uses other controller to list ads
-    @listings = Listing.all
-  end
 
   def new
     @listing = Listing.new
@@ -36,7 +32,7 @@ class ListingsController < ApplicationController
 
   def destroy
     @listing.destroy
-    redirect_to listings_path, flash: { success: t('.success') }, status: :see_other
+    redirect_to my_listings_path, flash: { success: t('.success') }, status: :see_other
   end
 
   private
