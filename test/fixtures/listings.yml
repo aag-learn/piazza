@@ -1,0 +1,28 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+<% %i[jerry kramer elaine].each do |user| %>
+<% 10.times do |n| %>
+auto_listing_<%= n %>_<%= user %>:
+  creator: <%= user %>
+  organization: <%= user %>
+  title: <%= Faker::Commerce.product_name %>
+  price: <%= Faker::Commerce.price.floor %>
+  condition: <%= %i[mint near_mint used defective].sample %>
+  tags: ['oneTag']
+<% end %>
+<% end %>
+
+one:
+  title: MyString
+  price: 1
+  organization: one
+  creator: one
+  condition: :near_mint
+  tags: ['oneTag']
+
+two:
+  title: MyString
+  price: 1
+  organization: two
+  creator: two
+  condition: :mint
+  tags: ['oneTag', 'twoTag']

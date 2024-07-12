@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  line_1: <%= Faker::Address.street_address%>
+  line_2: <%= Faker::Address.secondary_address %>
+  city: <%= Faker::Address.city %>
+  country: <%= Faker::Address.country_code %>
+  postcode: <%= Faker::Address.zip %>
+  addressable: auto_listing_1_jerry (Listing)
+
+two:
+  line_1: <%= Faker::Address.street_address%>
+  line_2: <%= Faker::Address.secondary_address %>
+  city: <%= Faker::Address.city %>
+  country: <%= Faker::Address.country_code %>
+  postcode: <%= Faker::Address.zip %>
+  addressable: auto_listing_2_jerry (Listing)

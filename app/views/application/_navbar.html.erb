@@ -15,7 +15,7 @@
   </div>
   <navbar-menu class="navbar-menu" data-navbar-target="menu">
     <div class="navbar-start">
-      <%= link_to t(".create_ad"), "#", class: "navbar-item" %>
+      <%= link_to t(".create_ad"), new_listing_path, class: "navbar-item" %>
       <%= link_to t(".messages"), "#", class: "navbar-item" if logged_in? %>
     </div>
     <div class="navbar-end">
@@ -23,7 +23,7 @@
         <%= link_to Current.user.name, profile_path, class: "navbar-link", id:'current_user_name' %>
         <div class="navbar-dropdown is-right">
           <%= link_to t(".profile"), profile_path, class: "navbar-item" %>
-          <%= link_to t(".my_ads"), "#", class: "navbar-item" %>
+          <%= link_to t(".my_ads"), my_listings_path, class: "navbar-item" %>
           <%= link_to t(".saved_ads"), "#", class: "navbar-item" %>
           <hr class="navbar-divider">
           <%= link_to t(".logout"), logout_path, class: "navbar-item", data: { turbo_method: :delete } %>

@@ -1,0 +1,43 @@
+<%# locals: (form:) %>
+<div class="block">
+  <%= form.label :title, class: 'label' %>
+  <%= form.text_field :title, class: 'input is-large' %>
+</div> 
+
+<layout-columns class="columns is-centered">
+  <layout-column class="box column is-half mt-6 p-5 m4">
+    <div class="is-flex is-flex-direction-column">
+      <form-field class="field">
+        <%= form.label :price, class: 'label' %>
+        <form-field class="field has-addons">
+          <p class="control">
+          <a href="" class="button is-static">€</a>
+          </p>
+          <p class="control is-expanded">
+          <%= form.text_field :price, class: 'input', inputmode: :numeric %>
+          </p>
+        </form-field>
+      </form-field>
+
+      <form-field class="field">
+        <%= form.label :condition, class: 'label' %> 
+        <div class="select is-fullwidth">
+          <%= form.select :condition, Listing.human_enum_options(:condition) %>
+        </div>
+      </form-field>
+
+      <form-field class="field">
+        <%= render 'tags_field', form: %>
+      </form-field>
+
+      <form-field class="field">
+        <%= form.label :address, class: "label" %> 
+        <div class="box">
+          <%= render 'addresses/fields', form: %>
+        </div>
+      </form-field>
+    </div>
+  </layout-column>
+  <layout-column class="box column is-half mt-6 p-5 m-4">
+  </layout-column>
+</layout-columns>
