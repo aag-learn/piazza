@@ -10,7 +10,8 @@ class ListingsController < ApplicationController
   def create
     @listing = Listing.new(listing_params.with_defaults(creator: Current.user, organization: Current.organization))
     if @listing.save
-      redirect_to listings_path(@listing), flash: { success: t('.success') }, status: :see_other
+      flash[:success] = t('.success')
+      recede_or_redirect_to listings_path(@listing), status: :see_other
     else
       render :new, status: :unprocessable_entity
     end
@@ -24,7 +25,7 @@ class ListingsController < ApplicationController
     @listing.assign_attributes listing_params
     if @listing.save
       flash[:success] = t('.success')
-      redirect_to listing_path(@listing), status: :see_other
+      recede_or_redirect_to listing_path(@listing), status: :see_other
     else
       render :edit, status: :unprocessable_entity
     end
@@ -32,7 +33,8 @@ class ListingsController < ApplicationController
 
   def destroy
     @listing.destroy
-    redirect_to my_listings_path, flash: { success: t('.success') }, status: :see_other
+    flash[:success] = t('.success')
+    recede_or_redirect_to my_listings_path, status: :see_other
   end
 
   private

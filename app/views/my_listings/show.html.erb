@@ -3,9 +3,18 @@
 <% end %>
 
 <div class="container mt-3">
+  <% page = @pagy&.page || 1 %>
+  <%= turbo_frame_tag "my_listings_page_#{page}", target: "_top" do %>
+   
   <layout-columns class="columns is-centered is-multiline">
     <%= render partial: @listings, layout: 'feed/listing_layout' %>
   </layout-columns>
+
+  <% if turbo_native_app? && @pagy&.next %>
+    <p></p>
+    <%= turbo_frame_tag "my_listings_page_#{page+1}", target: "_top", src: my_listings_path(page: page+1), loading: :lazy %>
+  <% end %>
+  <% end %>
 </div>
 
 <% if show_paginator? %>

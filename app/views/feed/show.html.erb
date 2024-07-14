@@ -3,6 +3,7 @@
 <% end %> 
 
 <div class="container mt-3">
+  <% if !turbo_native_app? %>
   <h1 class="title">
     <% if logged_in? %>
       <%= t('.welcome_with_name', name: Current.user.name) %>
@@ -10,13 +11,36 @@
       <%= t('.welcome') %>
     <% end %>
   </h1>
+  <% end %>
+ 
+  <% page = @pagy&.page || 1  %>
+  <%= turbo_frame_tag "feed_page_#{page}", target: '_top' do %>
   <layout-columns class="columns is-centered is-multiline">
     <%= render partial: @listings, layout: 'listing_layout' %>
   </layout-columns>
+
+  <% if turbo_native_app? && @pagy&.next %>
+    <p></p>
+    <%= turbo_frame_tag "feed_page_#{page+1}", target: "_top", src: root_path(page: page+1), loading: :lazy %>
+  <% end %>
+  <% end %>
 </div>
 
 <% if show_paginator? %>
 <div class="div m-5 mt-6">
   <%== pagy_bulma_nav(@pagy) %>
 </div>
+<% end %>
+
+<% if turbo_native_app? %>
+  <ol data-controller="bridge--nav-menu">
+    <li>
+      <%= link_to t("application.navbar.create_ad"),
+            new_listing_path,
+            class: "is-hidden",
+            data: {
+              bridge__nav_menu_target: "item"
+            } if logged_in? %>
+    </li>
+  </ol>
 <% end %>

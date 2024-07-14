@@ -4,10 +4,13 @@
 
 <layout-columns class="columns is-centered">
   <layout-column class="column is-10">
+    <% if !turbo_native_app? %>
     <div class="mb-3">
       <h1 class="title is-inline"><%= @listing.title %></h1>
       <%= link_to t('.edit'), edit_listing_path(@listing)%>
     </div>
+    <% end %>
+
     <%= render "tags", listing: @listing %>
     <layout-columns class="columns is-centered">
       <layout-column class="box column is-half mt-6 p-5 m-4">
@@ -41,3 +44,30 @@
     </layout-columns>
   </layout-column>
 </layout-columns>
+
+<% if turbo_native_app? %>
+  <ol data-controller="bridge--nav-menu">
+    <li>
+      <%= link_to t(".edit"),
+            edit_listing_path(@listing),
+            data: {
+              bridge__nav_menu_target: "item",
+              bridge_icon: "pencil"
+            } %>
+    </li>
+    <li>
+      <%= button_to t(".delete"),
+            listing_path(@listing),
+            method: :delete,
+            form: {
+              data: {
+                turbo_confirm: t("listings.edit.confirm_delete")
+              }
+            },
+            data: {
+              bridge__nav_menu_target: "item",
+              bridge_icon: "trash"
+            } %>
+    </li>
+  </ol>
+<% end %>
