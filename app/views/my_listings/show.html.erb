@@ -8,6 +8,9 @@
   </layout-columns>
 </div>
 
+<% if show_paginator? %>
 <div class="div m-5 mt-6">
   <%== pagy_bulma_nav(@pagy) %>
 </div>
+<% end %>
+
