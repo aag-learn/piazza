@@ -30,3 +30,16 @@
   <%== pagy_bulma_nav(@pagy) %>
 </div>
 <% end %>
+
+<% if turbo_native_app? %>
+  <ol data-controller="bridge--nav-menu">
+    <li>
+      <%= link_to t("application.navbar.create_ad"),
+            new_listing_path,
+            class: "is-hidden",
+            data: {
+              bridge__nav_menu_target: "item"
+            } if logged_in? %>
+    </li>
+  </ol>
+<% end %>
