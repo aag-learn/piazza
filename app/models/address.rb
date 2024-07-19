@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Address < ApplicationRecord
+  include Address::PermittedAttributes
+
   attribute :country, :string, default: 'ES'
 
   belongs_to :addressable, polymorphic: true
