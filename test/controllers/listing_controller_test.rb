@@ -16,8 +16,16 @@ class ListingControllerTest < ActionDispatch::IntegrationTest
         country: Faker::Address.country_code
       }
       post listings_path,
-           params: { listing: { title: 'The listing title', price: 1, condition: :near_mint, tags: %w[tagOne tagTwo],
-                                address_attributes: } }
+           params: {
+             listing: {
+               title: 'The listing title',
+               price: 1,
+               condition: :near_mint,
+               tags: %w[tagOne tagTwo],
+               cover_photo: fixture_file_upload('test-image-1.jpg', 'image/jpg'),
+               address_attributes:
+             }
+           }
     end
   end
 

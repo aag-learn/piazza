@@ -7,6 +7,9 @@ import { application } from "./application"
 import Bridge__NavMenuController from "./bridge/nav_menu_controller"
 application.register("bridge--nav-menu", Bridge__NavMenuController)
 
+import ImageUploadController from "./image_upload_controller"
+application.register("image-upload", ImageUploadController)
+
 import NavbarController from "./navbar_controller"
 application.register("navbar", NavbarController)
 

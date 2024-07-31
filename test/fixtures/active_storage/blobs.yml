@@ -1,0 +1,6 @@
+<% 30.times do |n| %>
+blob_<%= n %>:
+  <%= ActiveStorage::FixtureSet.blob(
+      filename: "test-image-#{rand(1..9)}.jpg"
+    ) %>
+<% end %>

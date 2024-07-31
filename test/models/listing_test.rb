@@ -12,6 +12,7 @@ class ListingTest < ActiveSupport::TestCase
       country: Faker::Address.country_code
     }
     @listing = Listing.new(title: 'A valid title', condition: :mint, price: 1000, creator: @creator, tags: ['oneTag'],
+                           cover_photo: active_storage_blobs(:blob_1),
                            organization: @organization, address_attributes:)
     assert @listing.valid?
   end

@@ -4,6 +4,8 @@
   <%= form.text_field :title, class: 'input is-large' %>
 </div> 
 
+<%= render "application/image_field", form:, label: t(".cover_photo"), attribute: :cover_photo %>
+
 <layout-columns class="columns is-centered">
   <layout-column class="box column is-half mt-6 p-5 m4">
     <div class="is-flex is-flex-direction-column">
