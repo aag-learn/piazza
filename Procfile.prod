@@ -1,0 +1,2 @@
+ngrok: ngrok http --host-header rewrite http://localhost:3100
+web: OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES RAILS_ENV=production bin/rails s -b 0.0.0.0 -p 3100
